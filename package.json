@@ -1,0 +1,40 @@
+{
+  "name": "dsh-taskboard",
+  "version": "0.1.0",
+  "description": "DeepSeek Harness 任务看板：人和 Agent 的共同工作空间，跨对话共享、AI 自动认领/流转、SQLite 持久化",
+  "type": "module",
+  "main": "dsh/index.js",
+  "engines": {
+    "node": ">=22.19"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-client-ui-primitives": "*"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "slots",
+        "locale",
+        "connection"
+      ],
+      "platform": "web"
+    }
+  },
+  "exports": {
+    ".": "./dsh/index.js",
+    "./client": "./dsh/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build:client": "node scripts/build-client.mjs"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

@@ -1,0 +1,4 @@
+# dsh bundle layer: mount the taskboard plugin.
+- insert:
+    - id: taskboard
+      name: 'dsh-taskboard'
