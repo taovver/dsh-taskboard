@@ -1,5 +1,9 @@
 // 看板工作流协议：浓缩自 Codex Taskboard 的 manage-taskboard SKILL.md，
 // 注入 taskboard_mutate 工具描述，模型每次调用都会读到这段强制规则。
+// 注入到每个"收到用户实质需求"turn 的第一步，提醒模型拆任务建卡。
+// 只在 step 1 且用户消息非工具/插件来源时注入一次，避免每步都打扰。
+export const TASKBOARD_REMINDER = `[系统提示] 用户刚刚提出了一个需求。如果这个需求包含多个步骤、子任务，或需要持续跟踪进度（例如复盘、调研、开发功能、多步分析），请用 taskboard 工具把工作拆解成任务卡片跟踪：taskboard_mutate create_task 建卡（默认 backlog/todo）→ 开始处理时 move_task 到 in_progress → 完成后 move_task 到 in_review → 用户确认后才 done，并用 add_comment 记录进展。如果只是简单的一次性回复，不需要建卡。任务卡片会让用户在任何对话里都能看到进度。`;
+
 export const TASKBOARD_PROTOCOL = `任务看板使用协议（必须遵守）：
 1. 先读后改：任何写操作前先 taskboard_query 读取任务/项目，拿到最新 version。
 2. 每次写操作必须携带 expectedVersion（= 最近一次读取返回的 version）。
